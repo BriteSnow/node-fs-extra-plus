@@ -1,0 +1,31 @@
+{
+  "name": "fs-extra-plus",
+  "version": "0.1.0",
+  "description": "A little bit more than fs-extra. (require async / await, node >= 7.10",
+  "main": "src/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/BriteSnow/node-fs-extra-plus.git"
+  },
+  "keywords": [
+    "fs",
+    "file",
+    "fs-extra",
+    "list files",
+    "watch"
+  ],
+  "dependencies": {
+    "fs-extra": "^3.0.1"
+  },
+  "devDependencies": {
+    "mocha": "^3.3.0"
+  },  
+  "engines": {
+    "node": ">=7.10.0"
+  },
+  "scripts": {
+    "test": "./node_modules/.bin/mocha"
+  },
+  "author": "Jeremy Chone <jeremy.chone@gmail.com> (http://jeremychone.com)",
+  "license": "MIT"
+}
