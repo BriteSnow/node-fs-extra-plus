@@ -54,5 +54,11 @@ describe("listFiles", function(){
 		assert.equal(files.length, 3, "number of files from 1 to 10");		
 	});
 
+	it("listFiles from to suffix", async () => {
+		var dirs = "./test/mock/";
+		var files = await fs.listFiles(dirs, {from: 1, to: 2, suffix: ".sql"});
+		assert.equal(files.length, 1, "number of .sql files from 1 to 2 should be 1");
+	});	
+
 });
 

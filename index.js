@@ -32,24 +32,32 @@ async function unlinkFiles(files){
 }
 
 
+const defaultListFilesOpts = {
+	deep: true
+};
+
 // build a flat file list from a dir (or directories) that match and ending
 // - dirs: Can be a single string (dir path) or an array of dir paths
-// - matchOpts: {String}: if string, then, it is the .suffix
+// - opts: {String}: if string, then, it is the .suffix
+//   - deep: Tell if we go recursive or not (default true)
 //   - suffix:string, // file suffix (i.e. endsWith), for example the extension (default: none)
 //   - prefix:string, // file prefix (i.e. startsWith)
+//   - match:regexString|function, // additional filtering (default: none) NOTE: NOT supported yet
 //   - from:number, // from this number (inclusive)
 //   - to:number, // to this number (inclusive)
-//   - match:regexString|function, // additional filtering (default: none) NOTE: NOT supported yet
 //   - numRgx  // regex used to extract the number from the path (default: /^(\d+)/)
-// - deep: Tell if we go recursive or not.
 //
 // returns: when nothing is found, still return an empty array.
-async function listFiles(dirs, matchOpts, deep = true, fileList = []){
+async function listFiles(dirs, opts,fileList = []){
 	var subDirs = [];
 	// make it an array
 	dirs = (dirs instanceof Array)?dirs:[dirs];
 
-	matchOpts = (typeof matchOpts === "string")?{suffix:matchOpts}:matchOpts;
+	// first if the opts is a string, then, interpret it as suffix
+	opts = (typeof opts === "string")?{suffix:opts}:opts;
+
+	// second, apply the opts to the default ones
+	opts = Object.assign({},defaultListFilesOpts, opts);
 
 	for (let dir of dirs){
 
@@ -59,15 +67,15 @@ async function listFiles(dirs, matchOpts, deep = true, fileList = []){
 			let filePath = path.join(dir, file);
 			if (fs.statSync(filePath).isDirectory()){
 				subDirs.push(filePath);
-			}else if (match(file, matchOpts)){
+			}else if (match(file, opts)){
 				fileList.push(filePath);
 			}			
 		}
 	}
 
 	// we do the subdirs after, so that the root files are before in the list that the sub directory files
-	if (deep && subDirs.length > 0){
-		await listFiles(subDirs, matchOpts, deep, fileList);
+	if (opts.deep && subDirs.length > 0){
+		await listFiles(subDirs, opts, fileList);
 	}
 
 	return fileList;
