@@ -1,6 +1,6 @@
 {
   "name": "fs-extra-plus",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A little bit more than fs-extra. (require async / await, node >= 7.10",
   "main": "src/index.js",
   "repository": {
