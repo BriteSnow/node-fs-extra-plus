@@ -25,8 +25,6 @@ async function unlinkFiles(files){
 		let exists = await fs.pathExists(file);
 		if (exists){
 			await fs.unlink(file);
-		}else{
-			throw `Can't unlink [${file}], does not exist.`;
 		}
 	}
 }
