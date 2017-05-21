@@ -16,6 +16,9 @@ describe("listFiles", function(){
 		var dirs = "./test/mock/";
 		var files = await fs.listFiles(dirs,".sql");
 		assert.equal(files.length, 2, "number of .sql files");
+
+		files = await fs.listFiles(dirs,{suffix:".sql"});
+		assert.equal(files.length, 2, "number of .sql files");
 	});	
 
 	it("listFiles prefix", async () => {
