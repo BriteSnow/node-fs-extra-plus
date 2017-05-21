@@ -12,6 +12,12 @@ describe("listFiles", function(){
 		assert(files.length > 2, "files size should be > 2 but is " + files.length);
 	});
 
+	it("listFiles suffix deep", async () => {
+		var dirs = "./test/mock/";
+		var files = await fs.listFiles(dirs,".sql");
+		assert.equal(files.length, 2, "number of .sql files");
+	});	
+
 	it("listFiles prefix", async () => {
 		var dirs = ["./node_modules/fs-extra"];
 		var files = await fs.listFiles(dirs, {prefix: "ensure"});
