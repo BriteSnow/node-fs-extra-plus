@@ -1,6 +1,6 @@
 {
   "name": "fs-extra-plus",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "A little bit more than fs-extra. (require async / await, node >= 7.10",
   "main": "src/index.js",
   "repository": {
@@ -15,16 +15,17 @@
     "watch"
   ],
   "dependencies": {
-    "fs-extra": "^3.0.1"
+    "fs-extra": "^4.0.1"
   },
   "devDependencies": {
-    "mocha": "^3.3.0"
-  },  
+    "mocha": "^3.5.0"
+  },
   "engines": {
     "node": ">=7.10.0"
   },
   "scripts": {
-    "test": "./node_modules/.bin/mocha"
+    "test": "./node_modules/.bin/mocha",
+    "testg": "./node_modules/.bin/mocha -g"
   },
   "author": "Jeremy Chone <jeremy.chone@gmail.com> (http://jeremychone.com)",
   "license": "MIT"

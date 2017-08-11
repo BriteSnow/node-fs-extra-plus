@@ -29,7 +29,6 @@ async function unlinkFiles(files){
 	}
 }
 
-
 const defaultListFilesOpts = {
 	deep: true
 };
@@ -46,13 +45,22 @@ const defaultListFilesOpts = {
 //   - numRgx  // regex used to extract the number from the path (default: /^(\d+)/)
 //
 // returns: when nothing is found, still return an empty array.
-async function listFiles(dirs, opts,fileList = []){
+async function listFiles(dirs, opts, fileList = [], depth = 0){
 	var subDirs = [];
 	// make it an array
 	dirs = (dirs instanceof Array)?dirs:[dirs];
 
 	// first if the opts is a string, then, interpret it as suffix
 	opts = (typeof opts === "string")?{suffix:opts}:opts;
+
+	// by default, opts.deep = -1 and true also mean -1. meaning full deep.
+	if (opts.deep == null || opts.deep === true){
+		opts.deep = -1;
+	}
+	// if opts.deep is false, then, it means just this level, meaning 0.
+	else if (opts.deep === false){
+		opts.deep = 0;
+	}	
 
 	// second, apply the opts to the default ones
 	opts = Object.assign({},defaultListFilesOpts, opts);
@@ -67,13 +75,12 @@ async function listFiles(dirs, opts,fileList = []){
 				subDirs.push(filePath);
 			}else if (match(file, opts)){
 				fileList.push(filePath);
-			}			
+			}
 		}
 	}
-
-	// we do the subdirs after, so that the root files are before in the list that the sub directory files
-	if (opts.deep && subDirs.length > 0){
-		await listFiles(subDirs, opts, fileList);
+	
+	if (subDirs.length > 0 && (opts.deep === -1 || opts.deep > depth)){
+		await listFiles(subDirs, opts, fileList, depth + 1);
 	}
 
 	return fileList;

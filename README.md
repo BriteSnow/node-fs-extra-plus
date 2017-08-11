@@ -5,6 +5,8 @@ NOTE: require async/await (and therefore >7.10). Node 8 is just around the corne
 
 ### .listFiles(dirs, opts)
 
+Build a flat file list from a dir (or directories) that match and ending. 
+
 - dirs: Can be a single string (dir path) or an array of dir paths
 - opts: {String}: if string, then, it is the .suffix
   - deep: Tell if we go recursive or not (default true)
@@ -28,6 +30,8 @@ files = await fs.listFiles("first/dir", {prefix:"drop_", suffix: ".sql"});
 // all files ending with ".sql" and starting with a number between 1 and 3 (e.g. 001_my_file.sql)
 files = await fs.list("first/dir", {from:1, to: 3, suffix:".sql"})
 
+// all files ending with ".sql" and starting with a number between 1 and 3, 2 directory down (2 including the root)
+files = await fs.list("first/dir", {from:1, to: 3, deep: 2, suffix:".sql"})
 ```
 
 ### .listDirs(dirs, deep = true, seedDirs = [])
