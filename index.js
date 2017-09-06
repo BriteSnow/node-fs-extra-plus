@@ -104,7 +104,7 @@ function match(fileName, opts){
 		return false;
 	}
 
-	// check the .match
+	// check the .match (assume it is a regex)
 	if (opts.match != null){
 		let matching = opts.match.exec(fileName);
 		if (!matching){

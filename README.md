@@ -1,7 +1,9 @@
 
 Same `fs-extra` object returned, just with the following additional methods. 
 
-NOTE: require async/await (and therefore >7.10). Node 8 is just around the corner.
+> Note 1: Requires async/await (and therefore >7.10).
+
+> Note 2: Typescript type declation included.
 
 ### .listFiles(dirs, opts)
 
@@ -10,12 +12,12 @@ Build a flat file list from a dir (or directories) that match and ending.
 - dirs: Can be a single string (dir path) or an array of dir paths
 - opts: {String}: if string, then, it is the .suffix
   - deep: Tell if we go recursive or not (default true)
-  - suffix:string, // file suffix (i.e. endsWith), for example the extension (default: none)
-  - prefix:string, // file prefix (i.e. startsWith)
-  - match:regexString|function, // additional filtering (default: none) NOTE: NOT supported yet
-  - from:number, // from this number (inclusive)
-  - to:number, // to this number (inclusive)
-  - numRgx  // regex used to extract the number from the path (default: /^(\d+)/)
+  - suffix:string, file suffix (i.e. endsWith), for example the extension (default: none)
+  - prefix:string, file prefix (i.e. startsWith)
+  - match:regexString|function, additional filtering (default: none) NOTE: NOT supported yet
+  - from:number, from this number (inclusive)
+  - to:number, to this number (inclusive)
+  - numRgx  regex used to extract the number from the path (default: /^(\d+)/)
 
 
 Examples: 
@@ -28,10 +30,10 @@ var files = await fs.listFiles(["first/dir/", "second/dir/"],".md");
 files = await fs.listFiles("first/dir", {prefix:"drop_", suffix: ".sql"});
 
 // all files ending with ".sql" and starting with a number between 1 and 3 (e.g. 001_my_file.sql)
-files = await fs.list("first/dir", {from:1, to: 3, suffix:".sql"})
+files = await fs.listFiles("first/dir", {from:1, to: 3, suffix:".sql"})
 
 // all files ending with ".sql" and starting with a number between 1 and 3, 2 directory down (2 including the root)
-files = await fs.list("first/dir", {from:1, to: 3, deep: 2, suffix:".sql"})
+files = await fs.listFiles("first/dir", {from:1, to: 3, deep: 2, suffix:".sql"})
 ```
 
 ### .listDirs(dirs, deep = true, seedDirs = [])
