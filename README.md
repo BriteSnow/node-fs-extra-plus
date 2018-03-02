@@ -5,6 +5,10 @@ Same `fs-extra` object returned, just with the following additional methods.
 
 > Note 2: Typescript type declation included.
 
+### Changelogs
+
+- 2.0.0: Updated to fs-extra `^5.0.0`, deprecated `watchDirs` (noops), updated mocha to `^5.0.1`
+
 ### .listFiles(dirs, opts)
 
 Build a flat file list from a dir (or directories) that match and ending. 

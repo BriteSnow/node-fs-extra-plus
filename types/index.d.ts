@@ -16,14 +16,13 @@ export interface ListOptions {
 	to: number;
 	/** regex used to extract the number from the path (default: /^(\d+)/) */
 	numRgx: RegExp;
-} 
+}
 
-export function listFiles(dirs: string | string[], 
-													opts: ListOptions | string, 
-													fileList?: string[], 
-													depth?: boolean): Promise<any>;
+export function listFiles(dirs: string | string[],
+	opts: ListOptions | string,
+	fileList?: string[],
+	depth?: boolean): Promise<any>;
 
-export function watchDirs(dirs: string | string[], fileSuffix?: string, fn?: (evt: any) => void): void;
 
 export function unlinkFiles(files: string[]): void;
 

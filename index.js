@@ -1,29 +1,21 @@
 const path = require("path");
 var fs = require("fs-extra");
 
-Object.assign(fs, {watchDirs, unlinkFiles, listFiles, listDirs});
+Object.assign(fs, { watchDirs, unlinkFiles, listFiles, listDirs });
 
 module.exports = fs;
 
 
-async function watchDirs(dirs, fileSuffix, fn){
-	// make sure the pass the dirs (as a shallow clone) as last argument to seed the allDirs with it
-	var allDirs = await listDirs(dirs, true, dirs.slice(0));
-
-	allDirs.forEach(dir => {
-		fs.watch(dir, function(action, name){
-			if (name.endsWith(fileSuffix)){
-				fn(action, name);
-			}
-		});
-	});	
+// DEPRECATED - DO NOTHING
+async function watchDirs(dirs, fileSuffix, fn) {
+	console.log("DEPRECATED, DOES NOTHING. Recommended: use chokidar");
 }
 
 
-async function unlinkFiles(files){
-	for (var file of files){
+async function unlinkFiles(files) {
+	for (var file of files) {
 		let exists = await fs.pathExists(file);
-		if (exists){
+		if (exists) {
 			await fs.unlink(file);
 		}
 	}
@@ -45,41 +37,41 @@ const defaultListFilesOpts = {
 //   - numRgx  // regex used to extract the number from the path (default: /^(\d+)/)
 //
 // returns: when nothing is found, still return an empty array.
-async function listFiles(dirs, opts, fileList = [], depth = 0){
+async function listFiles(dirs, opts, fileList = [], depth = 0) {
 	var subDirs = [];
 	// make it an array
-	dirs = (dirs instanceof Array)?dirs:[dirs];
+	dirs = (dirs instanceof Array) ? dirs : [dirs];
 
 	// first if the opts is a string, then, interpret it as suffix
-	opts = (typeof opts === "string")?{suffix:opts}:opts;
+	opts = (typeof opts === "string") ? { suffix: opts } : opts;
 
 	// by default, opts.deep = -1 and true also mean -1. meaning full deep.
-	if (opts.deep == null || opts.deep === true){
+	if (opts.deep == null || opts.deep === true) {
 		opts.deep = -1;
 	}
 	// if opts.deep is false, then, it means just this level, meaning 0.
-	else if (opts.deep === false){
+	else if (opts.deep === false) {
 		opts.deep = 0;
-	}	
+	}
 
 	// second, apply the opts to the default ones
-	opts = Object.assign({},defaultListFilesOpts, opts);
+	opts = Object.assign({}, defaultListFilesOpts, opts);
 
-	for (let dir of dirs){
+	for (let dir of dirs) {
 
 		var files = await fs.readdir(dir);
 
-		for (let file of files){
+		for (let file of files) {
 			let filePath = path.join(dir, file);
-			if (fs.statSync(filePath).isDirectory()){
+			if (fs.statSync(filePath).isDirectory()) {
 				subDirs.push(filePath);
-			}else if (match(file, opts)){
+			} else if (match(file, opts)) {
 				fileList.push(filePath);
 			}
 		}
 	}
-	
-	if (subDirs.length > 0 && (opts.deep === -1 || opts.deep > depth)){
+
+	if (subDirs.length > 0 && (opts.deep === -1 || opts.deep > depth)) {
 		await listFiles(subDirs, opts, fileList, depth + 1);
 	}
 
@@ -88,51 +80,51 @@ async function listFiles(dirs, opts, fileList = [], depth = 0){
 
 
 var defaultNumRgx = /^(\d+)/;
-function match(fileName, opts){
+function match(fileName, opts) {
 	// if not matchOpts, then always match
-	if (opts == null){
+	if (opts == null) {
 		return true;
 	}
 
 	// check the .suffix
-	if (opts.suffix != null && !fileName.endsWith(opts.suffix)){
+	if (opts.suffix != null && !fileName.endsWith(opts.suffix)) {
 		return false;
 	}
 
 	// check the .prefix
-	if (opts.prefix != null && !fileName.startsWith(opts.prefix)){
+	if (opts.prefix != null && !fileName.startsWith(opts.prefix)) {
 		return false;
 	}
 
 	// check the .match (assume it is a regex)
-	if (opts.match != null){
+	if (opts.match != null) {
 		let matching = opts.match.exec(fileName);
-		if (!matching){
+		if (!matching) {
 			return false;
 		}
 	}
 
 	// check the .from and .to
-	if (opts.from != null || opts.to != null){
+	if (opts.from != null || opts.to != null) {
 		let numRgx = opts.numRgx || defaultNumRgx;
 		let matching = numRgx.exec(fileName);
 
-		if (matching && matching[1]){
-			let num = parseInt(matching[1],10);
+		if (matching && matching[1]) {
+			let num = parseInt(matching[1], 10);
 
 			// if the opts.from is not defined, then, set it a 0 by default
-			let from = (opts.from != null)?opts.from:0;
+			let from = (opts.from != null) ? opts.from : 0;
 			// we always have a opts.from (default to 0), so, we can compare with num
-			if (num >= from){
+			if (num >= from) {
 				// if opts.to is a number (and defined) and num is greater, then, return false
-				if (typeof opts.to === "number" && num > opts.to){
+				if (typeof opts.to === "number" && num > opts.to) {
 					return false;
 				}
-			}else{
+			} else {
 				return false;
-			}			
+			}
 
-		}else{
+		} else {
 			// if we do not have a match, we can return false
 			return false;
 		}
@@ -142,23 +134,23 @@ function match(fileName, opts){
 }
 
 // build a flat dir list of those dirs and their sub dirs
-async function listDirs(dirs, deep = true, dirList = []){
+async function listDirs(dirs, deep = true, dirList = []) {
 
 	// make it an array
-	dirs = (dirs instanceof Array)?dirs:[dirs];
+	dirs = (dirs instanceof Array) ? dirs : [dirs];
 
-	for (let dir of dirs){
+	for (let dir of dirs) {
 
 		let subDirs = await fs.readdir(dir);
 
 		subDirs = subDirs.filter(f => fs.statSync(path.join(dir, f)).isDirectory()).map(f => path.join(dir, f));
-		
+
 		// we add this dir list to 
 		Array.prototype.push.apply(dirList, subDirs);
 
-		if (deep){
-			await listDirs(subDirs, deep, dirList);	
-		}		
+		if (deep) {
+			await listDirs(subDirs, deep, dirList);
+		}
 	}
 
 	return dirList;
