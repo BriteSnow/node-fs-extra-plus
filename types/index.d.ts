@@ -9,13 +9,13 @@ export interface ListOptions {
 	/** file prefix (i.e. startsWith) */
 	prefix?: string;
 	/** Additional filtering */
-	match: RegExp;
+	match?: RegExp;
 	/** from this number (inclusive) */
-	from: number;
+	from?: number;
 	/** to this number (inclusive) */
-	to: number;
+	to?: number;
 	/** regex used to extract the number from the path (default: /^(\d+)/) */
-	numRgx: RegExp;
+	numRgx?: RegExp;
 }
 
 export function listFiles(dirs: string | string[],
