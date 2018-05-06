@@ -3,7 +3,7 @@ export * from "fs-extra";
 
 export interface ListOptions {
 	/** Tell if we go recursive or not (default true) */
-	deep?: boolean;
+	deep?: number | boolean;
 	/** File suffix to match (i.e. endsWith), for example the extension (default: none) */
 	suffix?: string;
 	/** file prefix (i.e. startsWith) */
