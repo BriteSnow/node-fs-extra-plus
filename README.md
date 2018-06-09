@@ -1,63 +1,36 @@
 
-Same `fs-extra` object returned, just with the following additional methods. 
+`fs-extra` + `.glob()` (fast-glob) + `.saferRemove()` (from basedir by default)
 
-> Note 1: Requires async/await (and therefore >7.10).
 
-> Note 2: Typescript type declation included.
 
 ### Changelogs
 
-- 2.0.0: Updated to fs-extra `^5.0.0`, deprecated `watchDirs` (noops), updated mocha to `^5.0.1`
-
-### .listFiles(dirs, opts)
-
-Build a flat file list from a dir (or directories) that match and ending. 
-
-- dirs: Can be a single string (dir path) or an array of dir paths
-- opts: {String}: if string, then, it is the .suffix
-  - deep: Tell if we go recursive or not (default true)
-  - suffix:string, file suffix (i.e. endsWith), for example the extension (default: none)
-  - prefix:string, file prefix (i.e. startsWith)
-  - match:regexString|function, additional filtering (default: none) NOTE: NOT supported yet
-  - from:number, from this number (inclusive)
-  - to:number, to this number (inclusive)
-  - numRgx  regex used to extract the number from the path (default: /^(\d+)/)
+- 0.3.0: Simplified, and completely re-written. Just focused on what we often add on top of fs-extra. Right now, just `.glob()` (fast-glob) and `.saferRemove()`
 
 
-Examples: 
+### example
 
-```js
-// all files ending with ".md" from two dir (and their sub directories)
-var files = await fs.listFiles(["first/dir/", "second/dir/"],".md");
+```ts
+import * as fs from 'fs-extra-plus';
 
-// all files from first/dir and sub directory starting with "drop)" and ending with ".sql" 
-files = await fs.listFiles("first/dir", {prefix:"drop_", suffix: ".sql"});
 
-// all files ending with ".sql" and starting with a number between 1 and 3 (e.g. 001_my_file.sql)
-files = await fs.listFiles("first/dir", {from:1, to: 3, suffix:".sql"})
+async function example(){
 
-// all files ending with ".sql" and starting with a number between 1 and 3, 2 directory down (2 including the root)
-files = await fs.listFiles("first/dir", {from:1, to: 3, deep: 2, suffix:".sql"})
-```
+  // can use the normal fs-extra function
+  await fs.ensureDir('/tmp/my-temp/');
+  await fs.copy('/tmp/myfile', '/tmp/my-temp/mynewfile')
 
-### .listDirs(dirs, deep = true, seedDirs = [])
-
-```js
-// add sub dirs (deep) from these top directories
-var dirs = await fs.listDirs(["./node_modules/fs-extra"]);
-
-// Just first level down
-var dirs = await fs.listDirs(["./node_modules/fs-extra"], false);
+  // fs-extra-plus glob (using fast-glob)
+  const files = await fs.glob('**/*.js');
+  const files = await fs.glob(['**/*.js', '**/*.css'], 'src/');
+  // or full fast-glob options 
+  const files = await fs.glob(['**/*.js', '**/*.css'], {cwd: 'src/', deep: 3});
+  
+  // fs-extra-plus saferRemove
+  fs.saferRemove('../somedir'); // >> Throw error, seems not safe, does not belong to current dir
+  fs.saferRemove('/etc/'); // >> Throw error, seems not safe, does not belong to current dir
+  fs.saferRemove('some-file-in-basedir'); // >> will delete
+  fs.saferRemove(['some-dir/some-file'],'/tmp/'); // >> will delete. Can set a custom base dir (and delete multiple files)
+}
 
 ```
-
-### .watch(dirs, fileNameSuffix)
-
-```js
-fs.watchDirs(["first/dir/", "second/dir/"],".pcss", (action, name) => {
-    // passthrough of arguments from fs.watch (only be called on filename that end with the suffix above)
-    // action "change"
-    // name (the file/dir that is changed)
-})
-```
-

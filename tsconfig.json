@@ -1,0 +1,44 @@
+/**
+ *   This is the tsconfig.json for the devopos scripts, not for the UI or any other services. 
+ */
+
+{
+	"compilerOptions": {
+		// for node.js 8.4+, we can output to 2017 (Allow to have native async/await and all)
+		"target": "es2017",
+
+		// node.js does not support es2015, so, we tell typescript to output commonjs (we do not use rollup for server, just ts-node)
+		"module": "commonjs",
+
+		// 99% of the code will be .ts, and .js files will just be module glue and does not need to be processed by typescript (keep the glue small)
+		"allowJs": false,
+		"checkJs": false,
+
+		"sourceMap": false,  // we do not need the sourcemap		
+
+		"outDir": "./dist/", /* Redirect output structure to the directory. */
+
+		// To extract the maximum value from TypeScript, we use strict = true (no implicit, null check, ...)
+		"strict": true, 
+
+		// This is important to support 3rd party modules that are still in a node.js/commonjs way
+		"moduleResolution": "node", 
+
+		"declaration": true,
+		"declarationDir": "types/",
+
+
+		// allow to import moment like: import moment from "moment"
+		"allowSyntheticDefaultImports": true
+	},
+
+	// We want more control about which code we will compile and exclude
+	"include": [
+		"./src/**/*.ts"
+	],
+
+	"exclude": [
+		"node_modules"
+	]
+}
+
