@@ -1,4 +1,5 @@
 export * from 'fs-extra';
+import { join as pathJoin } from 'path';
 import { pathExists, remove } from 'fs-extra';
 import { async as _fastGlob } from 'fast-glob';
 import { IEntry } from 'fast-glob/out/types/entries';
@@ -18,7 +19,11 @@ export async function glob(pattern: string | string[], cwdOrFastGlobOptions?: st
 	}
 
 	const result = await _fastGlob(pattern, opts);
-	return result.map(entryItem => (typeof entryItem === 'string') ? entryItem : entryItem.path);
+	const cwd = (opts) ? opts.cwd : undefined;
+	return result.map(entryItem => {
+		const path = (typeof entryItem === 'string') ? entryItem : entryItem.path;
+		return (cwd) ? pathJoin(cwd, path) : path;
+	});
 }
 
 /** Remove one or more files */

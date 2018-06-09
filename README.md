@@ -22,7 +22,11 @@ async function example(){
 
   // fs-extra-plus glob (using fast-glob)
   const files = await fs.glob('**/*.js');
-  const files = await fs.glob(['**/*.js', '**/*.css'], 'src/');
+
+  const files = await fs.glob(['**/*.js', '**/*.css'], 'src/'); 
+  // Note that when cwd, the return files will have the cwd in the path
+  // e.g., files[0] === 'src/some.ts' (and not as 'some.ts' as in raw fast-glob)
+  
   // or full fast-glob options 
   const files = await fs.glob(['**/*.js', '**/*.css'], {cwd: 'src/', deep: 3});
   

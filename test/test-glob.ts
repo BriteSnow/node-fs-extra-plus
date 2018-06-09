@@ -19,6 +19,7 @@ describe("glob", function () {
 
 	it("glob-cwd", async () => {
 		const files = await glob(['**/*.sql'], 'test/data/');
+		assert.strictEqual(files[0], 'test/data/02_two.sql');
 		assert.strictEqual(files.length, 3);
 	});
 
