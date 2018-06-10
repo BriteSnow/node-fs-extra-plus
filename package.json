@@ -36,7 +36,8 @@
     "node": ">=8.0.0"
   },
   "scripts": {
-    "test": "./node_modules/.bin/mocha --opts mocha.opts"
+    "test": "./node_modules/.bin/mocha --opts mocha.opts",
+    "prepare": "tsc"
   },
   "author": "Jeremy Chone <jeremy.chone@gmail.com> (http://jeremychone.com)",
   "license": "MIT"

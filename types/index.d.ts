@@ -5,4 +5,3 @@ export * from 'fs-extra';
 export declare function glob(pattern: string | string[], cwdOrFastGlobOptions?: string): Promise<string[]>;
 /** Remove one or more files */
 export declare function saferRemove(names: string | string[], cwd?: string): Promise<void>;
-export declare function asArray(names: string | string[]): string[];
