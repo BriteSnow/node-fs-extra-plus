@@ -9,6 +9,8 @@ tmp/
 #ignore dev/ folder
 dev/
 
+dist/
+
 # Ignore Sublime Text files
 *.sublime-project
 *.sublime-workspace
