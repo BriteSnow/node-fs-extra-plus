@@ -34,7 +34,7 @@ async function example(){
   fs.saferRemove('../somedir'); // >> Throw error, seems not safe, does not belong to current dir
   fs.saferRemove('/etc/'); // >> Throw error, seems not safe, does not belong to current dir
   fs.saferRemove('some-file-in-basedir'); // >> will delete
-  fs.saferRemove(['some-dir/some-file'],'/tmp/'); // >> will delete. Can set a custom base dir (and delete multiple files)
+  fs.saferRemove(['some-dir/some-file'],'/tmp/'); // >> will delete `some-dir/some-file` from the `/tmp/` dir.
 }
 
 ```

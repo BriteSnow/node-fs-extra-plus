@@ -5,11 +5,16 @@ import { async as _fastGlob } from 'fast-glob';
 import { IEntry } from 'fast-glob/out/types/entries';
 import { IOptions, IPartialOptions } from 'fast-glob/out/managers/options';
 import { resolve as pathResolve } from 'path';
+import { globCompare } from './util';
 
 
 
-/** Simplified glob function (using fast-glob) for one or more pattern from current directory or a optional cwd one 
- * @returns always return Promise<string[]>
+/** 
+ * Simplified and sorted glob function (using fast-glob) for one or more pattern from current directory or a optional cwd one. 
+ * 
+ * NOTE: The result will be sorted by natural directory/subdir/filename order (as a would a recursive walk)
+ * 
+ * @returns always sorted result return Promise<string[]>
 */
 export async function glob(pattern: string | string[], cwdOrFastGlobOptions?: string): Promise<string[]> {
 	let opts: IPartialOptions | undefined = undefined;
@@ -20,10 +25,11 @@ export async function glob(pattern: string | string[], cwdOrFastGlobOptions?: st
 
 	const result = await _fastGlob(pattern, opts);
 	const cwd = (opts) ? opts.cwd : undefined;
-	return result.map(entryItem => {
+	const list = result.map(entryItem => {
 		const path = (typeof entryItem === 'string') ? entryItem : entryItem.path;
 		return (cwd) ? pathJoin(cwd, path) : path;
 	});
+	return list.sort(globCompare);
 }
 
 /** Remove one or more files */
