@@ -1,10 +1,9 @@
 export * from 'fs-extra';
-import { join as pathJoin } from 'path';
 import { pathExists, remove } from 'fs-extra';
 import { async as _fastGlob } from 'fast-glob';
 import { IEntry } from 'fast-glob/out/types/entries';
 import { IOptions, IPartialOptions } from 'fast-glob/out/managers/options';
-import { resolve as pathResolve } from 'path';
+import { resolve as pathResolve, join as pathJoin } from 'path';
 import { globCompare } from './util';
 
 
@@ -38,7 +37,7 @@ export async function saferRemove(names: string | string[], cwd?: string) {
 	const baseDir = (cwd) ? pathResolve(cwd) : pathResolve('./');
 
 	for (const name of asArray(names)) {
-		const fullPath = pathResolve(name);
+		const fullPath = pathJoin(baseDir, name);
 		if (!fullPath.startsWith(baseDir)) {
 			throw new Error(`Path to be removed does not look safe (nothing done): ${fullPath}\n\tCause: Does not belong to ${baseDir}`);
 		}
