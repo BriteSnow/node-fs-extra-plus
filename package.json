@@ -1,6 +1,6 @@
 {
   "name": "fs-extra-plus",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "A extension of fs-extra with .glob(), .saferRemove()",
   "main": "dist/index.js",
   "typings": "types/index.d.ts",
