@@ -33,7 +33,6 @@ export async function glob(pattern: string | string[], cwdOrFastGlobOptions?: st
 
 /** Remove one or more files */
 export async function saferRemove(names: string | string[], cwd?: string) {
-	const log = false
 	const baseDir = (cwd) ? pathResolve(cwd) : pathResolve('./');
 
 	for (const name of asArray(names)) {
@@ -43,7 +42,7 @@ export async function saferRemove(names: string | string[], cwd?: string) {
 		}
 		const exists = await pathExists(fullPath);
 		if (exists) {
-			return remove(fullPath);
+			await remove(fullPath);
 		}
 	}
 
