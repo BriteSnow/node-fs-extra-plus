@@ -21,15 +21,15 @@
     "watch"
   ],
   "dependencies": {
-    "@types/fs-extra": "^5.0.5",
+    "@types/fs-extra": "^5.1.0",
     "fast-glob": "^2.2.6",
     "fs-extra": "^7.0.1"
   },
   "devDependencies": {
     "@types/mocha": "^5.2.6",
-    "mocha": "^6.0.2",
-    "ts-node": "^8.0.3",
-    "typescript": "^3.3.3333"
+    "mocha": "^6.1.4",
+    "ts-node": "^8.1.0",
+    "typescript": "^3.4.5"
   },
   "engines": {
     "node": ">=8.0.0"
