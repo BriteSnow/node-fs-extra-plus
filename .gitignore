@@ -3,6 +3,7 @@
 
 # ignore node_modules
 node_modules/
+*.tgz
 
 # prevent tmp/ should be for dev db and stuff
 tmp/
