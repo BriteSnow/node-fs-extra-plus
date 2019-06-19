@@ -26,14 +26,14 @@ const src_data_expected = [
 describe("glob", function () {
 
 	it("glob-single", async () => {
-		const files = await glob('**/src/*.ts');
+		const files = await glob('src/*.ts');
 		assert.strictEqual(files[0], 'src/index.ts');
 		assert.strictEqual(files.length, 2);
 	});
 
 
 	it("glob-array", async () => {
-		const files = await glob(['**/src/*.ts', '**/test/*.ts']);
+		const files = await glob(['src/*.ts', 'test/*.ts']);
 		assert.strictEqual(files[0], 'src/index.ts');
 		assert.strictEqual(files[1], 'src/util.ts');
 		assert.strictEqual(files.length, 4);

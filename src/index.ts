@@ -1,11 +1,10 @@
 export * from 'fs-extra';
 import { pathExists, remove } from 'fs-extra';
-import { async as _fastGlob } from 'fast-glob';
-import { IEntry } from 'fast-glob/out/types/entries';
-import { IOptions, IPartialOptions } from 'fast-glob/out/managers/options';
+import * as FastGlob from 'fast-glob';
+import { Options } from 'fast-glob';
+
 import { resolve as pathResolve, join as pathJoin } from 'path';
 import { globCompare } from './util';
-
 
 
 /** 
@@ -16,16 +15,15 @@ import { globCompare } from './util';
  * @returns always sorted result return Promise<string[]>
 */
 export async function glob(pattern: string | string[], cwdOrFastGlobOptions?: string): Promise<string[]> {
-	let opts: IPartialOptions | undefined = undefined;
+	let opts: Options | undefined = undefined;
 
 	if (cwdOrFastGlobOptions != null) {
 		opts = (typeof cwdOrFastGlobOptions === 'string') ? { cwd: cwdOrFastGlobOptions } : cwdOrFastGlobOptions;
 	}
 
-	const result = await _fastGlob(pattern, opts);
+	const result = await FastGlob(pattern, opts);
 	const cwd = (opts) ? opts.cwd : undefined;
-	const list = result.map(entryItem => {
-		const path = (typeof entryItem === 'string') ? entryItem : entryItem.path;
+	const list = result.map(path => {
 		return (cwd) ? pathJoin(cwd, path) : path;
 	});
 	return list.sort(globCompare);
@@ -53,4 +51,4 @@ export async function saferRemove(names: string | string[], cwd?: string) {
 function asArray(names: string | string[]) {
 	return (names instanceof Array) ? names : [names];
 }
-//#endregion ---------- /Utils ---------- 
+//#endregion ---------- /Utils ----------
