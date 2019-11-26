@@ -29,9 +29,10 @@ export async function glob(pattern: string | string[], cwdOrFastGlobOptions?: st
 	return list.sort(globCompare);
 }
 
-/** Remove one or more files */
-export async function saferRemove(names: string | string[], cwd?: string) {
+/** Remove one or more files. Resolved the number of names removed */
+export async function saferRemove(names: string | string[], cwd?: string): Promise<string[]> {
 	const baseDir = (cwd) ? pathResolve(cwd) : pathResolve('./');
+	let removedNames: string[] = [];
 
 	for (const name of asArray(names)) {
 		const fullPath = pathJoin(baseDir, name);
@@ -41,9 +42,10 @@ export async function saferRemove(names: string | string[], cwd?: string) {
 		const exists = await pathExists(fullPath);
 		if (exists) {
 			await remove(fullPath);
+			removedNames.push(name);
 		}
 	}
-
+	return removedNames;
 }
 
 
