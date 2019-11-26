@@ -7,5 +7,5 @@ export * from 'fs-extra';
  * @returns always sorted result return Promise<string[]>
 */
 export declare function glob(pattern: string | string[], cwdOrFastGlobOptions?: string): Promise<string[]>;
-/** Remove one or more files */
-export declare function saferRemove(names: string | string[], cwd?: string): Promise<void>;
+/** Remove one or more files. Resolved the number of names removed */
+export declare function saferRemove(names: string | string[], cwd?: string): Promise<string[]>;
