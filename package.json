@@ -27,9 +27,9 @@
   },
   "devDependencies": {
     "@types/mocha": "^5.2.7",
-    "mocha": "^6.2.2",
-    "ts-node": "^8.5.4",
-    "typescript": "^3.7.3"
+    "mocha": "^7.0.0",
+    "ts-node": "^8.6.0",
+    "typescript": "^3.7.4"
   },
   "engines": {
     "node": ">=8.0.0"
