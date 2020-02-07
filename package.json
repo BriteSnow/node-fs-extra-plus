@@ -1,6 +1,6 @@
 {
   "name": "fs-extra-plus",
-  "version": "0.5.14",
+  "version": "0.5.15",
   "description": "A extension of fs-extra with .glob(), .saferRemove()",
   "main": "dist/index.js",
   "typings": "types/index.d.ts",
@@ -26,10 +26,10 @@
     "fs-extra": "^8.1.0"
   },
   "devDependencies": {
-    "@types/mocha": "^5.2.7",
-    "mocha": "^7.0.0",
-    "ts-node": "^8.6.0",
-    "typescript": "^3.7.4"
+    "@types/mocha": "^7.0.1",
+    "mocha": "^7.0.1",
+    "ts-node": "^8.6.2",
+    "typescript": "^3.7.5"
   },
   "engines": {
     "node": ">=8.0.0"

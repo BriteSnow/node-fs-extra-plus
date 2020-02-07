@@ -28,8 +28,8 @@
 		"declarationDir": "types/",
 
 
-		// allow to import moment like: import moment from "moment"
-		"allowSyntheticDefaultImports": true
+		// Needed to call import default (replaces allowSyntheticDefaultImports)
+		"esModuleInterop": true
 	},
 
 	// We want more control about which code we will compile and exclude
