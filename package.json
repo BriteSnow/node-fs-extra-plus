@@ -21,13 +21,13 @@
     "watch"
   ],
   "dependencies": {
-    "@types/fs-extra": "^8.1.1",
-    "fast-glob": "^3.2.2",
+    "@types/fs-extra": "^9.0.1",
+    "fast-glob": "^3.2.3",
     "fs-extra": "^9.0.1"
   },
   "devDependencies": {
     "@types/mocha": "^7.0.2",
-    "mocha": "^7.2.0",
+    "mocha": "^8.0.1",
     "ts-node": "^8.10.2",
     "typescript": "^3.9.5"
   },
@@ -35,7 +35,7 @@
     "node": ">=8.0.0"
   },
   "scripts": {
-    "test": "./node_modules/.bin/mocha --opts mocha.opts",
+    "test": "TS_NODE_FILES=true ./node_modules/.bin/mocha -p ./test/tsconfig.json ./test/spec/*.spec.ts",
     "prepare": "tsc"
   },
   "author": "Jeremy Chone <jeremy.chone@gmail.com> (http://jeremychone.com)",

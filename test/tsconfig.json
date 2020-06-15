@@ -1,0 +1,35 @@
+ {
+	"compilerOptions": {
+		"target": "ES2019",
+
+		"module": "commonjs",
+
+		"moduleResolution": "node", 
+		
+		"strict": true,
+
+		"allowJs": false,
+		"checkJs": false,
+
+		"sourceMap": true,
+
+		"outDir": "./.out/",
+
+		"baseUrl": ".",
+		
+		"experimentalDecorators": true,
+				
+		"esModuleInterop": true
+	},
+
+	"include": [
+		"../src/**/*.ts",
+		"./**/*.ts"
+	],
+
+	"exclude": [
+		"node_modules",
+		"services",
+		".rpt2_cache" 
+	]
+}

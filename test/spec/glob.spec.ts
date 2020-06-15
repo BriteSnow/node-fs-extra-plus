@@ -1,6 +1,6 @@
 import * as assert from 'assert';
-import { glob } from '../src/index';
-import { globCompare } from '../src/util';
+import { glob } from '../../src/index';
+import { globCompare } from '../../src/util';
 
 const sort_data_src = ['test/data/src/pcss/0_main.pcss',
 	'test/data/src/views/HomeView.pcss',
@@ -33,7 +33,7 @@ describe("glob", function () {
 
 
 	it("glob-array", async () => {
-		const files = await glob(['src/*.ts', 'test/*.ts']);
+		const files = await glob(['src/*.ts', 'test/spec/*.ts']);
 		assert.strictEqual(files[0], 'src/index.ts');
 		assert.strictEqual(files[1], 'src/util.ts');
 		assert.strictEqual(files.length, 4);
