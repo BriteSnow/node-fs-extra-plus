@@ -1,8 +1,7 @@
-export * from 'fs-extra';
 import FastGlob, { Options } from 'fast-glob';
 import { pathExists, remove } from 'fs-extra';
 import { join as pathJoin, resolve as pathResolve } from 'path';
-import { globCompare } from './util';
+import { globCompare } from './util.js';
 
 
 

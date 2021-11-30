@@ -1,6 +1,6 @@
 import * as assert from 'assert';
 import { copy } from 'fs-extra';
-import { saferRemove } from '../../src/index';
+import { saferRemove } from '../../src/index.js';
 
 
 describe("saferRemove", function () {
@@ -27,4 +27,3 @@ describe("saferRemove", function () {
 
 
 });
-

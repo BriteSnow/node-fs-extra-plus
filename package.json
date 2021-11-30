@@ -1,6 +1,7 @@
 {
   "name": "fs-extra-plus",
-  "version": "0.5.23",
+  "type": "module",
+  "version": "0.6.0",
   "description": "A extension of fs-extra with .glob(), .saferRemove()",
   "main": "dist/index.js",
   "typings": "types/index.d.ts",
@@ -35,7 +36,7 @@
     "node": ">=8.0.0"
   },
   "scripts": {
-    "test": "TS_NODE_FILES=true ./node_modules/.bin/mocha -p ./test/tsconfig.json ./test/spec/*.spec.ts",
+    "test": "TS_NODE_PROJECT='test/tsconfig.json' ./node_modules/.bin/mocha",
     "prepare": "tsc"
   },
   "author": "Jeremy Chone <jeremy.chone@gmail.com> (http://jeremychone.com)",

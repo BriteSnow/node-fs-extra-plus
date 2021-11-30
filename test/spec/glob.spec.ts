@@ -1,6 +1,6 @@
 import * as assert from 'assert';
-import { glob } from '../../src/index';
-import { globCompare } from '../../src/util';
+import { glob } from '../../src/index.js';
+import { globCompare } from '../../src/util.js';
 
 const sort_data_src = ['test/data/src/pcss/0_main.pcss',
 	'test/data/src/views/HomeView.pcss',
@@ -55,4 +55,3 @@ describe("glob", function () {
 
 
 });
-
